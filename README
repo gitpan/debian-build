@@ -1,0 +1,31 @@
+These files will allow you to automatically build a debian package from
+a release perl source tree.
+
+Simply do the following:
+tar xzvf perl5.00?_??.tar.gz
+cd perl5.00?_??
+tar xzvf debian-build-?.??.tar.gz
+./debian/rules this-version binary
+
+You will have to supply your root password twice.  If you don't want to
+do this, become root first.  You'll have the various
+perl*_5.00?.??_*.deb files in the parent directory.
+
+If for some reason, you need a debian version number greater than 1,
+change the build line to: './debian/rules this-version binary expdebver=N'
+where N is the new debian version.
+
+Note that the make doesn't currently stop on a (partially) failed make
+test due to a problem with locales.  This will (most likely) change in
+the future.
+
+Note that this hasn't been tested with sfio at all yet.  I haven't had
+the time but it is on the plate.
+
+To learn more about Debian/GNU Linux, please visit <http://www.debian.org/>
+or write to debian@debian.org.
+
+If you need to reach me, I'm at torin@daft.com.
+
+Darren Stalder
+Debian Perl Maintainer

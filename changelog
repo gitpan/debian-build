@@ -1,0 +1,425 @@
+perl (5.004-1) unstable; urgency=low
+
+  * Perl 5.004 is released.  Another debian version will follow that fixes
+    packaging problems.
+  * Applied patch from HJ Lu for libc6.
+  * Edit copyright file for correct version.
+  * Take the /bin/perl link out of the build tar's postinst.
+
+ -- Darren Stalder <torin@daft.com>  Thu, 15 May 1997 18:29:55 -0700
+
+perl (5.003.07-10) unstable frozen; urgency=HIGH
+
+  * SUID perl patch to fix buffer overrun that allows any user to get a
+    suid-root shell.
+
+ -- Darren Stalder <torin@daft.com>  Mon, 21 Apr 1997 20:50:21 -0700
+
+perl (5.003.07-9) unstable frozen; urgency=medium
+
+  * Applied patch from HJ Lu for libc6
+  * Removed perl-base from dist for release into bo
+  * This will be the last release that has /bin/perl as a link (or at all).
+
+ -- Darren Stalder <torin@daft.com>  Wed, 16 Apr 1997 01:02:07 -0700
+
+perl (5.003.07-8) unstable; urgency=low
+
+  * How'd that get in there?
+    Somehow a static version of postinst crept into the dist such that it
+    depended on 5.00320 and i386.  *embarrased*
+
+ -- Darren Stalder <torin@daft.com>  Sat, 8 Mar 1997 14:06:21 -0800
+
+perl (5.003.07-7) unstable; urgency=low
+
+  * Compile the perl library with -D_REENTRANT for LinuxThreads.  It's
+    still dangerous and there are problems with MULTIPLICITY (which this
+    isn't compiled with) as well.
+  * Sent the output of the various rmdir -p's in postinst to /dev/null so
+    that people don't see old gunk.
+  * Included target to add a comment to the changelog so that an automatic
+    package from untarring this in a new perl subversion works with the
+    correct version.
+
+ -- Darren Stalder <torin@daft.com>  Mon, 3 Mar 1997 01:35:20 -0800
+
+perl (5.003.07-6) unstable; urgency=low
+
+  * Changed perl, perl-suid, and perl-debug to section interpreters.
+    Changed perl-base to section base.
+  * Changed rules to determine the perl version dynamically so that it
+    doesn't have to be editted for each new version.
+  * Rebuld and upload so that perl will just pre-depend on libc5.4 rather
+    than libc5.4.17-1.  This and -5 were destined for stable and 5.4.17-1
+    isn't available for that.
+
+ -- Darren Stalder <torin@daft.com>  Fri, 17 Jan 1997 19:04:13 -0800
+
+perl (5.003.07-5) unstable; urgency=low
+
+  * Moved config.over.MK to the debian directory so that all the files
+    that I add are there.
+  * Just ignore the mkdir on /usr/local as the easiest solution to the
+    NFS-ro /usr/local problem.  Suggestion by Guy Maor <maor@ece.utexas.edu>.
+
+ -- Darren Stalder <torin@daft.com>  Fri, 10 Jan 1997 02:13:22 -0800
+
+perl (5.003.07-4) unstable; urgency=low
+
+  * Fixed problem with suidperl.  It will actually run suid now.
+
+ -- Darren Stalder <torin@daft.com>  Sun, 15 Dec 1996 23:56:59 -0800
+
+perl (5.003.07-3) unstable; urgency=low
+
+  * Add check to postinst to check for old perlconfig created include
+    directories and removed them.
+  * Made perlbase's Config.pm use the correct install paths
+  * Made perl provide/replace/conflict with perlbase to replace it
+    properly
+  * No longer put libperl.a in suidperl since we not doing shared perl.
+
+ -- Darren Stalder <torin@daft.com>  Thu, 12 Dec 1996 23:40:09 -0800
+
+perl (5.003.07-2) unstable; urgency=low
+
+  * Changed Perl to provide io as well as conflict with it since it's been
+    subsumed into the main perl distribution.
+  * Applied patch from Nick to make use FileHandle; work transparently
+    although is should be use IO::Handle (or other appropriate IO::)
+  * Applied patch from Randy so that use sigtrap doesn't complain anymore.
+  * Applied patch from Paul that changes use strict tie; into a warning.
+  * Changed perl back to a static libperl
+  * Developed and packaged a perl-base to go on the base-floppies.
+
+ -- Darren Stalder <torin@daft.com>  Thu, 21 Nov 1996 04:13:51 -0800
+
+perl (5.003.07-1) unstable; urgency=medium
+  
+  * added code to postinst/prerm that only creates the empty
+    /usr/local/lib/site_perl directory if /usr/local/lib is writable by
+    root (fixes Bug #5003)
+  * Updated to dpkg standards version 2.1.1.0  (fixes Bugs #3874, 4709)
+  * Pre-generated all the *.ph files that people will probably need.  The
+    correct asm directory will have a symbolic link set during postinst.
+    (fixes Bugs #4493, 4739, 1856, 3770, 3277, 3803, 3814, 1099, 3784,
+     1201, 1170, 3908, 2405, 4717, 2184, 1411, 2440)
+    I wonder if this is a record for the most number of bugs fixed by a
+    change.
+  * Changed debian.rules to generate a shared libperl for the main
+    executable with a static suidperl and debugperl.  This should help
+    Fast-CGI, nvi, and if folks are using the compiler.
+  * Edited the copyright file to reflect current reality rather than
+    bygone days (fixes Bug #2589)
+  * Added Pre-depends: ldso to control file in case the user upgrades ldso
+    at the same time they upgrade Perl. (fixes Bug #2589)
+  * Made sure that all files in the examples directory
+    (/usr/doc/perl/examples) were readable (fixes Bug #3995, 4615, 4734, 
+    4870)
+  * Added symbolic link /usr/doc/perl/examples to point to the examples
+    directory. (fixes Bug #3997)  (this is obsoleted by new standards)
+
+ -- Darren Stalder <torin@daft.com>  Mon, 28 Oct 1996 05:34:26 -0800
+
+Perl 5.003 Debian 2 Mon Jul  1 01:27:23 1996  Darren Stalder  <torin@daft.com>
+
+	* Changed Depends: libc5, libdb1, libgdbm1 to Pre-Depends
+	* Added check for pre-depends support into preinst
+	* Added a link to ../usr/bin/perl from /bin/perl
+	* Had Configure undef CSH so that we don't need to depend on csh
+	  anymore.
+
+Perl 5.003 Debian 1 Tue Jun 25 02:25:00 1996  Darren Stalder  <torin@daft.com>
+
+	* Added patches from Charles Bailey to bring Perl up to 5.003
+	* Included patch set from Andy Dougherty to fix gconvert problem.
+
+Perl 5.002 Debian 10 Thu Jun  6 01:05:36 1996  Darren Stalder  <torin@daft.com>
+
+	* The permissions of many of the files were set right.  Fix in
+	  debian.rules so this can't happen again.
+
+Perl 5.002 Debian 9 Tue Jun  4 02:00:00 1996  Darren Stalder  <torin@daft.com>
+
+	* Changed recommends of perl from source | includes to libc5-dev
+	  in accord with where the include files actually come from
+	* Added the following Priority fields: Perl - Important (from
+	  Packages), perl-suid - Standard, perl-debug - Optional
+	* use dpkg-name instead of a manual move
+
+Perl 5.002 Debian 9 Wed May  1 00:13:32 1996  Darren Stalder  <torin@daft.com>
+
+	* Changed the '_' in the the package names to '-' per Ian Jackson.
+
+Perl 5.002 Debian 8 Sun Apr 28 18:28:34 1996  Darren Stalder  <torin@daft.com>
+
+	* Added Source and Section fields to all of the control files.
+
+Perl 5.002 Debian 8 Fri Apr 26 23:59:47 1996  Darren Stalder  <torin@daft.com>
+
+	* Added tcsh as well as c-shell to the dependency list.  I'll
+	  remove the tcsh once c-shell is provided by it.
+	* Changed the suidperl from being a question in the postinst to
+	  being it's own package.
+	* Added perld (debugging perl) as a package.  Both of these are
+	  dependent on the specific version of perl.  We'll see if this
+	  causes a problem in upgrading.
+	* Changed mail address in postinst to debian-bugs@pixar.com.  I've
+	  got to do something about perlconfig
+
+Perl 5.002 Debian 8 Wed Apr 17 02:48:46 1996  Darren Stalder  <torin@daft.com>
+
+	* Changed the tcsh dependency to c-shell.
+	* Added the dosuid define to Configure so that perl would once
+	  again create a suidperl.  It was dropped from the upstream
+	  release.  There is a question in the postinst that asks if you
+	  want it or not.
+
+Perl 5.002 Debian 8 Mon Mar 11 23:01:27 1996  Darren Stalder  <torin@daft.com>
+
+	* Added dependency on tcsh until the globbing works without
+	  calling csh.
+
+Perl 5.002 Debian 7 Fri Feb 23 21:41:04 1996  Darren Stalder  <torin@daft.com>
+	* Added changes from the m68k project to make perl compile cleanly on m68k
+
+Perl 5.002 Debian 6 Thu Feb  8 07:42:52 1996  Darren Stalder  <torin@daft.com>
+
+	* Patch from Andreas from Test::Harness for where libwww tickled
+	  some bugs.
+
+Perl 5.002 Debian 6 Tue Feb  6 21:20:37 1996  Darren Stalder  <torin@daft.com>
+
+	* Paul patched his modules so they comply with version-checking
+	  and makes some of them strict clean
+	* Paul patched xsubpp to allow for empty prototypes (1.933)
+	* Patch from Larry to fix a broken study (it didn't know when a
+	  string was modified)
+	* Patch from dean to shutup warnings from File:Path
+
+Perl 5.002 Debian 5 Tue Feb  6 03:52:37 1996  Darren Stalder  <torin@daft.com>
+
+	* Implemented basic (sev 1) changes to Config.pm for initial fix
+	  on Bug #1916.  The debian install paths are no longer embedded
+	  in it.
+
+Perl 5.002 Debian 5 Mon Feb  5 19:02:01 1996  Darren Stalder  <torin@daft.com>
+
+	* Changed to new debian release number since the beta level
+	  changed
+	* Larry released beta3
+	* Some extra configure variables creeped into Configure.  Fixed by
+	  Tim
+	* Revamped 32bit overflow patch for beta3 from Chip
+	* Don't allow globbing to take place on open if strict refs is in
+	  place
+	* Andreas upgraded Test::Harness to 1.06
+	* Selfstubber nees to tell Exporter that it's autoloaded (andreas)
+	* Fix so that reading the _DATA_ file handle doesn't freeze at EOF
+	  (Chip)
+	* debugger still had old version at the end.  Deleted (Ilya)
+	* patch to avoid segv's in certain globs (Chip)
+	* make autoloader warnings go away (Ilya)
+	* fix to Makefile.SH so that you don't *have* to have . in your
+	  path (Roderick Shertler)
+	* Dean upgraded h2xs to 1.15
+	
+Perl 5.002 Debian 4 Sat Feb  3 02:10:40 1996  Darren Stalder  <torin@daft.com>
+
+	* Ilya released a new version of the debugger
+	* A SEGV based on magic is fixed with a patch from Chip
+
+Perl 5.002 Debian 4 Tue Jan 30 01:08:52 1996  Darren Stalder  <torin@daft.com>
+
+	* Paul upgraded xsubpp to 1.932
+	* The documentation for the -M switch had been dropped somewhere.
+	  This puts it back in.  (from Tom)
+	* $@ would append to itself with each die
+
+Perl 5.002 Debian 4 Fri Jan 26 03:15:26 1996  Darren Stalder  <torin@daft.com>
+
+	* perlxs.pod documentation patch by Dean
+
+Perl 5.002 Debian 4 Wed Jan 24 00:45:04 1996  Darren Stalder  <torin@daft.com>
+
+	* Andy added an extra $ to nm when he applied my patch - fixed
+	* Paul upgraded xsubpp to 1.931
+	* Started using the debian-extract-changes.pl from the libdb package
+
+Perl 5.002 Debian 4 Tue Jan 23 11:43:51 1996  Darren Stalder  <torin@daft.com>
+
+	* Ilya fixed parts of the Readline pod docs
+	* Andy left out a piece on the pod/Makefile patch
+	* patch to DBL_BIG in case someone tries to build this with a.out
+
+Perl 5.002 Debian 4 Mon Jan 22 03:22:34 1996  Darren Stalder  <torin@daft.com>
+
+	* Upgraded to perl5.002beta2 from Andy
+	* Added in the pod fixes from Tom
+	* Upgraded xsubpp to 1.930 from Paul
+	* The debugger was added in twice in 2b2, patch2b2a fixes this
+	* Added a pod/Makefile fix from Andy
+	* Dean upgraded h2x2 to version 1.14 - patched
+
+Perl 5.002 Debian 4 Wed Jan 10 04:36:02 1996  Darren Stalder  <torin@daft.com>
+
+	* Added patches for the following:
+	  hex('80000000'), 0x80000000 should be the same - Chip Salzenberg
+	  a variety of fixes for File::Find - Tim Bunce
+	  perlembed.pod is less misleading  - Tim Bunce
+	  fixes for perlre.pod and perl.pod - Hallvard B Furuseth
+
+Perl 5.002 Debian 4 Sun Jan  7 02:47:14 1996  Darren Stalder  <torin@daft.com>
+
+	* Upgraded to the upstream version of perl5.002beta1h from Andy
+	* Removed the a.out generation from debian.rules since I'm not
+	  making a.out packages anymore
+	* Changed pod/Makefile from PERL = perl to PERL = ../miniperl so
+	  that a build will work if you don't have perl installed already
+	* Changed installperl to not try to guess about links if you
+	  installing to a different directory than you will be running
+	  from (debian-tmp/usr/bin)
+
+Perl 5.002 Debian 4 Fri Dec 29 23:57:14 1995  Darren Stalder  <torin@daft.com>
+
+	* Added a check to see if /usr/local/include is there before
+	  attempting to build .ph files from the .h files there (Bug #1856)
+
+Perl 5.002 Debian 4 Fri Dec 22 01:39:08 1995  Darren Stalder  <torin@daft.com>
+
+	* Added the patch 5.002b1g from Tom - a documentation only patch
+
+Perl 5.002 Debian 3 Tue Dec 19 01:47:19 1995  Darren Stalder  <torin@daft.com>
+
+	* Perl now uses the new sonames for libgdbm and libdb with
+	  dependencies on the new names (libdb1 and libgdbm1)
+	
+Perl 5.002 Debian 3 Mon Dec 18 03:23:04 1995  Darren Stalder  <torin@daft.com>
+
+	* Summary of additions:
+	  Added patches a-f from Andy
+	  Applied the patch to implement Safe perl that will be coming out
+	  soon.
+	  Applied some documentation patches - perldata/dsc/mod/ref by
+	  TomC, perlembed by JonO, tiehash by RandyR, and perlxs by DeanR
+	* Had to cruft up the Configure script so that it does an nm on
+	  static libs and an nm -D on shared libs.  I thought just nm
+	  should work on both.
+
+Perl 5.002 Debian 2 Mon Nov 27 02:34:59 1995  Darren Stalder  <torin@daft.com>
+
+	* Removed find lines in debian.rules binary install since
+	  installperl does a good job of it
+	* Removed find lines in postinst/perlconfig since the include file
+	  permissions and modes should be fine.
+	* moved /usr/doc/perl/example_code to /usr/doc/examples/perl
+	* Changed reference in example README to 'eg' directory to
+	  examples directory
+	* Changed some bad paths in example code directory
+	* Had install check and not ask about installing in odd places if
+	  debian-tmp is in the install-path
+
+Perl 5.002 Debian 1 Sat Nov 25 01:05:15 1995  Darren Stalder  <torin@daft.com>
+
+	* Removed manual generation of manpages in debian.rules file.  Now
+	  just call ./installman with the appropriate arguments.
+	* Changed extensions for man1 pages to 1p and man3 pages to 3pm
+	* Changed Configure so that it actually listens when you tell it
+	  what extensions to use for for man1 and man3.
+	* Changed references to /usr/local and perl5.000 in the man pages
+	* Changed references in scripts from /usr/local to /usr
+	* Setup config.over file to fix-up config.sh to install into
+	  debian-tmp/usr/* instead of trying to do it in sh.  The shared
+	  libs weren't going in the right place.
+	* Generated absolute path in config.over since the install runs
+	  from many different subdirectoris
+
+Perl 5.002 Debian 1 Wed Nov 22 20:42:34 1995  Darren Stalder <torin@daft.com>
+	* Applied some doc changes to perlre.pod
+
+Perl 5.002 Debian 1 Tue Nov 21 02:57:54 1995  Darren Stalder  <torin@daft.com>
+
+	* Updated to 5.002beta1.
+	* Changed the prerm/postinst scripts to reflect the new version
+	  specific *.ph directories
+	* Added dependencies on libgdbm and libdb, giving support for
+	  those databases.
+	* Removed gdbm capability from aout version.  User can add it if
+	  necessary without recompiling perl.
+	* SDBM problem went away with patchlevel 2.
+
+Perl 5.002 Debian 1 Sat Nov 18 00:16:15 1995  Darren Stalder  <torin@daft.com>
+
+	* I (Darren Stalder) took over as maintainer of Perl.
+	* Put quotes around $Config{archlibexp} in h2ph.PL to prevent -w
+	  warnings.
+	* Changed the various debian files to reflect the new status.
+	* Changed the debian.rules to use elf as the primary development
+	  platform with a.out being secondary.
+	* Having problems with SDBM.
+
+Perl 5.001 Debian 7 (5.001n) - ??-??-95 Ray Dassen <jdassen@wi.LeidenUniv.nl>
+* UNRELEASED
+* Longer Description field in control file.
+* Changed Maintainer field to myself. This package should still be considered
+  orphaned though.
+* a.out version now does dynamic loading via libdld.
+
+Perl 5.001 Debian 6 (5.001n) - 04-11-95 Ray Dassen <jdassen@wi.LeidenUniv.nl>
+* Updated to 5.001n: big patch, small problems remain. 
+* debian.rules now passes definitions to Configure, instead of running 
+  Configure with a modified hints/linux.sh.
+* Use a variable in debian.rules to test the binary format.
+* With ELF, DB_File support is disabled (rather ad hoc).
+* Use softlinks for suidperl and perl<version>.
+* Added explicit Depends: elf-libc, which was implicit (via elf-libgdbm).
+
+Perl 5.001 Debian 5 (5.001m) - 16-10-95 Ray Dassen <jdassen@wi.LeidenUniv.nl>
+* ELF version has GDBM support; depends on elf-libgdbm
+* Diff now relative to Andy Dougherty's patches (these are unofficial, but
+  de facto standard).
+
+Perl 5.001 Debian 4 - 13-10-95 Ray Dassen <jdassen@wi.LeidenUniv.nl>
+* Interim release, since perl appears to be orphaned.
+* Updated to 5.001m.
+
+Perl 5.001 Debian 3 - 5/9/95 Carl Streeter <streeter@cae.wisc.edu>
+* Fixed Bug#219.  h2ph was making output which didn't work.
+* put magic in the postinst to fix it.  This opens the can
+* of worms whereby I fix all of h2ph's messups.  Ugh.
+
+Perl 5.001 Debian 2 - 5/8/95 Carl Streeter <streeter@cae.wisc.edu>
+* Added dialog.pl interface to dialog for Jim Robinson
+
+Perl 5.001 Debian 1 - 3/1/95 Carl Streeter <streeter@cae.wisc.edu>
+* Updated perl version to 5.001.  
+* Added black magic to figure out if a kernel tree was installed
+* Yelled a lot if one wasn't
+* added unofficial patches a-e from perl5-porters
+* added 'perlconfig' script to generate all possible header files
+  (Just a copy of postinst, really)
+* perl now passes all of the tests.
+
+Perl 5.000 Debian 5 - 3/1/95 Carl Streeter <streeter@cae.wisc.edu>
+* fixed bug in h2ph handling on subdirectories
+* merged all of the unofficial patches from the perl5-porters mailing list.
+
+Perl 5.000 Debian 4 - 3/1/95 Carl Streeter <streeter@cae.wisc.edu>
+* h2ph now makes all useful headers.
+
+Perl 5.000 Debian 3 - 2/28/95 Carl Streeter <streeter@cae.wisc.edu>
+* called h2ph to make the handy perl headers.
+* Put the example code and emacs modes in /usr/doc
+
+Perl 5.000 Debian 2 - 2/27/95 Carl Streeter <streeter@cae.wisc.edu>
+* generally fixed it up so it was useful for debian.
+
+Perl 5.000 Debian 1 - Robert Sanders <Robert.Sanders@linux.org>
+* Initial release. 
+
+** Local Variables: **
+** mode:debian-changelog **
+** change-log-default-name:"changelog" **
+** fill-prefix:"  " **
+** End: **

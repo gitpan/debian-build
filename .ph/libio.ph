@@ -1,0 +1,46 @@
+if (!defined &_LIBIO_H)
+{
+    eval 'sub _LIBIO_H {1;}';
+    eval 'sub _IOS_INPUT {1;}';
+    eval 'sub _IOS_OUTPUT {2;}';
+    eval 'sub _IOS_ATEND {4;}';
+    eval 'sub _IOS_APPEND {8;}';
+    eval 'sub _IOS_TRUNC {16;}';
+    eval 'sub _IOS_NOCREATE {32;}';
+    eval 'sub _IOS_NOREPLACE {64;}';
+    eval 'sub _IOS_BIN {128;}';
+    eval 'sub _IO_MAGIC {0xFBAD0000;}';
+    eval 'sub _OLD_STDIO_MAGIC {0xFABC0000;}';
+    eval 'sub _IO_MAGIC_MASK {0xFFFF0000;}';
+    eval 'sub _IO_USER_BUF {1;}';
+    eval 'sub _IO_UNBUFFERED {2;}';
+    eval 'sub _IO_NO_READS {4;}';
+    eval 'sub _IO_NO_WRITES {8;}';
+    eval 'sub _IO_EOF_SEEN {0x10;}';
+    eval 'sub _IO_ERR_SEEN {0x20;}';
+    eval 'sub _IO_DELETE_DONT_CLOSE {0x40;}';
+    eval 'sub _IO_LINKED {0x80;}';
+    eval 'sub _IO_IN_BACKUP {0x100;}';
+    eval 'sub _IO_LINE_BUF {0x200;}';
+    eval 'sub _IO_TIED_PUT_GET {0x400;}';
+    eval 'sub _IO_CURRENTLY_PUTTING {0x800;}';
+    eval 'sub _IO_IS_APPENDING {0x1000;}';
+    eval 'sub _IO_IS_FILEBUF {0x2000;}';
+    eval 'sub _IO_SKIPWS {01;}';
+    eval 'sub _IO_LEFT {02;}';
+    eval 'sub _IO_RIGHT {04;}';
+    eval 'sub _IO_INTERNAL {010;}';
+    eval 'sub _IO_DEC {020;}';
+    eval 'sub _IO_OCT {040;}';
+    eval 'sub _IO_HEX {0100;}';
+    eval 'sub _IO_SHOWBASE {0200;}';
+    eval 'sub _IO_SHOWPOINT {0400;}';
+    eval 'sub _IO_UPPERCASE {01000;}';
+    eval 'sub _IO_SHOWPOS {02000;}';
+    eval 'sub _IO_SCIENTIFIC {04000;}';
+    eval 'sub _IO_FIXED {010000;}';
+    eval 'sub _IO_UNITBUF {020000;}';
+    eval 'sub _IO_STDIO {040000;}';
+    eval 'sub _IO_DONT_CLOSE {0100000;}';
+}
+1;

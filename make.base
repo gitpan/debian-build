@@ -1,0 +1,60 @@
+#!debian/tmp/usr/bin/perl -w
+
+use vars qw(@files @dirs);
+
+$arches = "alpha, i386, m68k, mips, ppc, sparc";
+
+die "Usage: $0 architecture\n       architecture is one of $arches\n" unless $ARGV[0] and $arches =~ $ARGV[0];
+
+while (<DATA>)
+{
+    chomp;
+    next if $_ eq "./";
+    s/=arch=/$ARGV[0]/;
+    s/=version=/$]/;
+    -e "debian/tmp/$_" or warn("Non-existent file: debian/tmp/$_\n"), next;
+    push @{ -d _ ? "dirs" : "files" }, $_;
+}
+close(DATA);
+
+foreach (@dirs)
+{
+    mkdir "debian/tmp-base/$_", 0755 or die "Unable to mkdir: debian/tmp-base/$_, $!, died at";
+}
+
+$| = 1;
+foreach (@files)
+{
+    system("cp -pd debian/tmp/$_ debian/tmp-base/$_") and die "Unable to cp file: debian/tmp/$_";
+    # we need to use and above since cp returns 0 on success
+}
+
+__DATA__
+./
+usr/
+usr/bin/
+usr/bin/perl
+usr/lib/
+usr/lib/perl5/
+usr/lib/perl5/=arch=-linux/
+usr/lib/perl5/=arch=-linux/=version=/
+usr/lib/perl5/=arch=-linux/=version=/auto/
+usr/lib/perl5/=arch=-linux/=version=/auto/Socket/
+usr/lib/perl5/=arch=-linux/=version=/auto/Socket/Socket.bs
+usr/lib/perl5/=arch=-linux/=version=/auto/Socket/Socket.so
+usr/lib/perl5/=arch=-linux/=version=/Config.pm
+usr/lib/perl5/AutoLoader.pm
+usr/lib/perl5/Carp.pm
+usr/lib/perl5/Cwd.pm
+usr/lib/perl5/DynaLoader.pm
+usr/lib/perl5/Exporter.pm
+usr/lib/perl5/File/
+usr/lib/perl5/File/Basename.pm
+usr/lib/perl5/File/Find.pm
+usr/lib/perl5/File/Path.pm
+usr/lib/perl5/Socket.pm
+usr/lib/perl5/auto/
+usr/lib/perl5/auto/DynaLoader/
+usr/lib/perl5/auto/DynaLoader/dl_findfile.al
+usr/lib/perl5/strict.pm
+usr/lib/perl5/vars.pm

@@ -1,0 +1,31 @@
+#!/bin/sh -
+# perl.prerm - called by dpkg before deleting
+# written by Darren Stalder (whooptidoo!)
+# $Id: prerm,v 1.1 1996/10/28 04:35:08 torin Exp torin $
+#
+
+set -e
+
+case "$1" in
+    remove|upgrade|deconfigure)
+        rm -f /usr/lib/perl5/=arch=-linux/=version=/asm
+	cd /usr/bin
+	test -f perl.dist || ln perl perl.dist
+	(test -w /usr/local/lib && rmdir -p /usr/local/lib/site_perl/=arch=-linux 2>/dev/null || exit 0)
+	# this will only remove site_perl if it's completely empty of site stuff
+    ;;
+
+    failed-upgrade)
+    ;;
+
+    *)
+        echo "prerm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0
+
+# Local Variables:
+# vc-master-templates:(("%s../../RCS/%s,v" . RCS))
+# End:

@@ -1,0 +1,34 @@
+#! /bin/sh
+# perl.postinst - call after dpkg has unpacked
+# written by Darren Stalder (whooptidoo!)
+# $Id: postinst,v 1.4 1997/03/03 01:22:05 torin Exp torin $
+#
+
+set -e
+
+case "$1" in
+    configure)
+	ln -s asm-=arch= /usr/lib/perl5/=arch=-linux/=version=/asm
+	cd /usr/bin; test -f perl.dist && (rm -f perl; mv perl.dist perl)
+	test -w /usr/local/lib -a ! -e /usr/local/lib/site_perl && mkdir -p /usr/local/lib/site_perl/=arch=-linux
+	# Add checks for the old i486-linux directories created by poor perlconfigs
+	test '=arch=' = 'i386' && test -d /usr/lib/perl5/i486-linux && \
+		(find /usr/lib/perl5/i486-linux -name '*.ph' | xargs -r rm -f; \
+	 	 find /usr/lib/perl5/i486-linux -type d -links 2 | xargs -r rmdir -p) 2> /dev/null
+	# the last will remove all the directories that are now empty or will be empty when the empty subdirs disappear
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0
+
+# Local Variables:
+# vc-master-templates:(("%s../../RCS/%s,v" . RCS))
+# End:

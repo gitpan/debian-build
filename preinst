@@ -1,0 +1,24 @@
+#! /bin/sh
+# perl.preinst - called by dpkg before unpacking
+# written by Darren Stalder (whooptidoo!)
+# $Id: preinst,v 1.2 1996/10/28 04:34:11 torin Exp torin $
+#
+
+set -e
+
+case "$1" in
+    install|upgrade|abort-upgrade)
+	dpkg --assert-support-predepends
+    ;;
+
+    *)
+	echo "preinst called with unknown argument \`$1'" >&2
+	exit 1
+    ;;
+esac
+
+exit 0
+
+# Local Variables:
+# vc-master-templates:(("%s../../RCS/%s,v" . RCS))
+# End:

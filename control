@@ -1,0 +1,37 @@
+Section: interpreters
+Maintainer: Darren Stalder <torin@daft.com>
+Source: perl
+Standards-Version: 2.1.1.0
+
+Package: perl
+Priority: Important
+Architecture: any
+Pre-Depends: ${shlibs:Pre-Depends}
+Suggests: perl-suid, perl-debug
+Replaces: io
+Provides: io
+Conflicts: io
+Description: Larry Wall's Practical Extracting and Report Language.
+ An interpreted scripting language, known among some as "Unix's
+ Swiss Army Chainsaw".
+ .
+ Perl is optimized for scanning arbitrary text files and system 
+ administration. It has built-in extended regular expression matching
+ and replacement, a dataflow mechanism to improve security with
+ setuid scripts and is extendible via modules that can interface
+ to C libraries.
+
+Package: perl-suid
+Priority: Standard
+Architecture: any
+Depends: perl (=${Source-Version})
+Description: Runs setuid perl scripts.
+ This can be a security hole but it is much safer than shell scripts and
+ with -Tw can be much safer than setuid executables.
+
+Package: perl-debug
+Priority: Optional
+Architecture: any
+Depends: perl (=${Source-Version})
+Description: Allow debugging perl scripts (and perl).
+ Truly extensive and exhaustive output is possible with different settings.
